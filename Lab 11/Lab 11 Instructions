@@ -1,0 +1,19 @@
+The goal of this lab is to reinforce binary tree concepts. Specifically, this lab is to do construct a function (and construct a test program using a non-trivial tree) which will display a binary tree by levels showing “vacant spots”. The display for the following tree should be:
+
+
+M
+
+H T
+
+E null P W
+
+A null null null null Q null null
+
+
+The function header should be:
+
+
+template <typename T>
+
+void display_complete_tree (const binary_tree_node<T>* t)
+
