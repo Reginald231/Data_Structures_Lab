@@ -1,0 +1,25 @@
+The purpose of this lab is to reinforce pointer concepts and to introduce a graphical debugger on cloudland. The standard linux debugger is gdb and ddd is a GUI built on top of gdb. We will use ddd. Some good references are
+
+http://knuth.luther.edu/~leekent/tutorials/ddd.html
+
+https://www.youtube.com/watch?v=4aLaHTg45Sw
+
+https://www.youtube.com/watch?v=a4iH_HNcQt4
+
+http://heather.cs.ucdavis.edu/~matloff/Debug/Debug.pdf
+
+
+Your instructor will do a demo of ddd illustrating the most important capabilities which include:
+
+how to load and run your program
+
+how to set a breakpoint
+
+how to step through your code
+
+how to examine values of variables
+
+how to access and interpret the stack trace
+
+
+To use ddd (or any program with a graphical interface), windows users will have to have an x-server running on their windows machine and will have to tunnel the x-packets using port 22. You covered this in lab 1. After the demo, you need to download lab6.cpp, compile it, and then execute it on cloudland. This program contains a classic error involving pointers. You need to find and correct that error. Obviously, ddd is a tool that can help you.
