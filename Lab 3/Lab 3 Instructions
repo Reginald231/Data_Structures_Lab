@@ -1,0 +1,1 @@
+Lab 3The purpose of this lab is to reinforce the concept of constructing and testing a class in C++. Specifically, the problem is to do problem 19 on page 95 of the text. Use the header file complex_number.h and the test program test_complex.cpp. Remember that the your code must compile and run correctly on the cloudland server.
