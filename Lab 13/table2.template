@@ -1,0 +1,141 @@
+#include <iostream>
+#include <cstdlib>
+#include <list>
+#include <iostream>
+#include <iterator>
+
+/*To provide contect to the methods in the file:
+ 
+  TEMPLATE CLASS PROVIDED: Table<RecordType>
+    This class is a container template class for a Table of records.
+    The template parameter, RecordType, is the data type of the records in the
+    Table. It may any type with a default constructor, a copy constructor,
+    an assignment operator, and an integer member variable called key.
+ 
+  CONSTRUCTOR for the Table<RecordType> template class:
+    Table( )
+      Postcondition: The Table has been initialized as an empty Table.
+ 
+  MODIFICATION MEMBER FUNCTIONS for the Table<RecordType> class:
+    void insert(const RecordType& entry)
+      Precondition: entry.key >= 0
+      Postcondition: If the table already had a record with a key equal to
+      entry.key, then that record is replaced by entry. Otherwise, entry has
+      been added as a new record of the Table.
+ 
+    void remove(int key)
+      Postcondition: If a record was in the Table with the specified key, then
+      that record has been removed; otherwise the table is unchanged.
+ 
+  CONSTANT MEMBER FUNCTIONS for the Table<RecordType> class:
+    bool is_present(const Item& target) const
+      Postcondition: The return value is true if there is a record in the
+      Table with the specified key. Otherwise, the return value is false.
+ 
+    void find_location(int key, bool& found,
+      typename std::list<RecordType>::iterator& location) const
+      Postcondition: If a record is in the Table with the specified key, then
+      found is true and location is set to an iterator access the record.
+      Otherwise found is false and the result contains garbage.
+ 
+    size_t size( ) const
+      Postcondition: Return the total number of records in the
+      Table.
+ */
+
+using namespace main_savitch_12B;
+using namespace std;
+
+template <typename RecordType>
+const std::size_t table<RecordType>::NUM_BUCKETS;
+
+template <typename RecordType>
+table<RecordType>::table(){//This is just a default constructor, but all properties of this class are defined in the header file.
+}
+
+template <typename RecordType>
+void table<RecordType>::insert(const RecordType &entry) {
+    size_t hashIndex = hash(entry.key);
+
+    data[hashIndex].clear();/*removing the original data in the index of the hash table. This is done because of there being lists involved in the table's indices and we mostlikely would not remove the data like this in a real world situation.*/
+    
+    data[hashIndex].push_front(entry);//Using push_front because data[hashIndex] is a list in the "data" variable. We need to use push_front since lists have dynamic sizes and we want the data to be in the front in order for better accessability(?) <- during the lab, the T.A explained, but barely much was remembered about this.
+}
+
+template <typename RecordType>
+void table<RecordType>::remove(int key) {
+
+    if (is_present(key))
+        data[hash(key)].clear();
+}
+
+template <typename RecordType>
+bool table<RecordType>::is_present(int key) const {
+    size_t hashIndex = hash(key);
+
+    if(data[hashIndex].empty() == 0){
+        /*
+        empty() returns 0 when there is an item present in the list, but returns 1 when there is no item present in the list. In the case with some functions like .empty(), 1 typically means true, while 0 typically means false.
+        */
+         return true;
+    }
+    else
+        return false;
+}
+
+template <typename RecordType>
+RecordType table<RecordType>::get_record(int key) const {
+    return data[hash(key)];
+    
+    /*
+    returning the record in the hash table using a given key that will be hashed in
+    the hash function.
+    */
+}
+
+template <typename RecordType>
+std::size_t table<RecordType>::size() const {//return the size of the hash table.
+    int recordCount = 0;
+    
+    for(int i = 0; i < NUM_BUCKETS; i++){
+        recordCount += data[i].size();
+    }
+}
+
+template <typename U>
+std::ostream& operator << (std::ostream& output,
+                           const table<U>& t){
+
+//    iterator<int> it;
+    for(int i = 0; i < t.NUM_BUCKETS; i++) {
+
+        typename std::list<U>::const_iterator it;///<typical way to declare an iterator with a list.
+        /*Using iterators are actually recommended more then using a loop using a variable such as for(int i = 0; i < limit; i++)...
+         */
+
+        for(it = t.data[i].begin(); it != t.data[i].end(); it++) {
+            output << *it;
+        }
+    }
+//    return out;
+
+    return output;
+}
+
+template <typename RecordType>
+void table<RecordType>::find_location(int key, bool& found,
+                                      typename std::list<RecordType>::iterator&
+                                      location) {
+    //This lab assignment was not acutally used but there is documentation for this function listed in the beginning of the code.
+}
+
+template <typename RecordType>
+std::size_t table<RecordType>::hash(int key) const {//using key to make hash index
+
+    //we have ten values to use for the hash table, so we'll have to try to make 10 different hash indexes to hold the data. Collisions should be avoided in hashing, which presents the purpose of a hash function
+    //which is to provide unique indices for the keys being passed to the funciton to remove possible collision.
+
+    size_t hash = key % 10;
+
+    return hash;
+}
