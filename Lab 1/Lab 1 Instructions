@@ -1,0 +1,28 @@
+Lab 1
+
+
+The purpose of this lab is to help you become familiar with the development environment and to reinforce elementary C++ concepts.
+
+
+The computing resource that we will use this semester is the linux server cloudland.kennesaw.edu. An account on this server will be created for each student in the course. The compiler that we will be using is the GNU c++ compiler named g++. The criterion for correctness for your code is whether it compiles and executes correctly on this server.
+
+
+To access cloudland, you will need to "ssh" to cloudland. The way to do this is platform specific:
+
+MAC or linux – open a terminal window and execute an ssh command:
+
+ssh – Y cloudland.kennesaw.edu - note that the -Y is optional (if you want a GUI session)
+
+XQuartz is required for MAC to run an X session
+
+windows – You will need additional software: ssh client (putty is another popular choice) and potentially an x-server.
+
+You must start the x-server before you connect to cloudland. Be sure that you have tunneling x packets on port 22 selected. The ssh client also has an ftp client to allow you to move files between your client and cloudland.
+
+
+Write a program that displays a "Southern version" of hello world.
+
+Use an editor on your client and then upload your code to cloudland.
+
+Use an editor on cloudland.
+
