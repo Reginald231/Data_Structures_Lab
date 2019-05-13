@@ -1,0 +1,114 @@
+//
+// Created by Reginald Long on 2019-03-27.
+//
+
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+heap<T>::heap() {
+}
+
+template <typename T>
+size_t heap<T>::size() const {
+
+    return v.size();
+}
+
+template <typename T>
+void heap<T>::insert(const T &item) {
+
+    if (v.empty()) {
+        v.push_back(item);
+    }
+
+    else {
+
+    int i = v.size();
+    v.push_back(item);
+
+
+    while ((v[i] > v[(i - 1) / 2]) && (i != 0)) {
+
+        T temp = v[i];
+
+        v[i] = v[(i - 1) / 2];
+
+        v[(i - 1) / 2] = temp;
+
+        i = (i-1)/2;
+    }
+
+    }
+}
+
+template <typename T>
+void heap<T>::remove() {
+
+    if(v.empty())
+        return;
+
+    if(size() == 1) {
+        v.pop_back();
+        return;
+    }
+
+    int index = 0;
+    v[0] = v[size()];
+    v.pop_back();
+
+    while((v[index] < v[(index * 2) +1]) || (v[(index * 2) + 2] && index > 0)) {
+
+        T temp = v[index];
+
+        v[index] = v[max_child(index)];
+
+        index = max_child(index);
+
+        v[index] = temp;
+
+    }
+}
+
+
+template <typename T>
+T heap<T>::max() const {
+
+    return v[0];
+}
+
+//template <typename T>
+//T & heap<T>::max() {
+//
+//    return v[0];
+//}
+
+template <typename T>
+size_t heap<T>::max_child(size_t index) const {
+
+        T max = 0;
+        size_t leftChild = (2*index) + 1;
+        size_t rightChild = (2*index) + 2;
+
+        if(v[leftChild] >= v[rightChild]){
+            max = leftChild;
+        }
+        if (v[rightChild] >= v[leftChild]){
+            max = rightChild;
+        }
+        return max;
+}
+
+template <typename T>
+size_t heap<T>::parent(size_t index) {//returning the parent at the specified element.
+    return ((index-1)/2);
+}
+
+template <typename T>
+bool heap<T>::is_empty() const {
+    return v.empty();
+}
